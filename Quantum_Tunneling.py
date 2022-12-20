@@ -19,12 +19,12 @@ def Quant_Tunnel(N, dt, width = 3.0, potential = 1.0, δ = 4.0, k = 1.5, x0 = -1
     #Potential Barrier
     V1 = np.array([potential if 0.0 < xx < width  else 0.0 for xx in x])
     #The following 2 lines can be uncommented to add another potential in the simulation.
-    #All the instances of V1 should be replaced with V.
-    #V2 = np.array([potential if 100.0 < xx < (100.0 + width)  else 0.0 for xx in x])
-    #V = V1 + V2
+    #All the instances of V should be replaced with V.
+    V2 = np.array([potential if 100.0 < xx < (100.0 + width)  else 0.0 for xx in x])
+    V = V1 + V2
 
     #Hamiltonian
-    H_diag = (np.ones(N) / dx**2) + V1
+    H_diag = (np.ones(N) / dx**2) + V
     H_non_diag = np.ones(N - 1) * (-0.5 / dx**2)
     Hamiltonian = sparse.diags([H_diag, H_non_diag, H_non_diag], [0, 1, -1])
          
@@ -45,7 +45,7 @@ def Quant_Tunnel(N, dt, width = 3.0, potential = 1.0, δ = 4.0, k = 1.5, x0 = -1
  
     #Plotting the graphs and setting the axes.
     fig, axis = plt.subplots()
-    plt.plot(x, V1 * 0.1, color = 'r', label = 'Potential V(x)')
+    plt.plot(x, V * 0.1, color = 'r', label = 'Potential V(x)')
     Ψ_plot, = axis.plot(x, evolve(), color = 'g', label = 'Particle')
     axis.set_ylim(0, 0.1)
     axis.set_xlabel('Position (x)')
@@ -61,7 +61,7 @@ def Quant_Tunnel(N, dt, width = 3.0, potential = 1.0, δ = 4.0, k = 1.5, x0 = -1
     #Function that calculates every frame.
     def time_step():
         global τ
-        while (τ < 300):
+        while True:
             τ += dt
             yield evolve()
      
