@@ -35,7 +35,7 @@ print(Vx.shape,Vy.shape)                                                        
 print(X.shape,Y.shape)                                                                     # streamplot function are of same size.
 
 plt.streamplot(X,Y,np.negative(Vx),np.negative(Vy))                                        # Plotting the Electric field. The negative comes from the 
-plt.axis("scaled")                                                                         # physics formula of the electric field. 
+plt.axis("scaled")                                                                         # physics formula of the electric field.
 plt.show()
 
 
